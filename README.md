@@ -1,2 +1,2 @@
 # react-app
-A React Learning App built in React JSX with COREUI and Webpack  
+A Experimental React App built in React JSX with COREUI and Webpack  
