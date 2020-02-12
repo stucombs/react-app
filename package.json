@@ -1,0 +1,24 @@
+{
+  "name": "react-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "author": "Stu Combs",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^7.1.0",
+    "radium": "^0.26.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.0.1",
+    "webpack": "^4.41.5"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.1.5",
+    "babel-cli": "^6.26.0"
+  },
+  "main": "webpack.config.js",
+  "description": ""
+}

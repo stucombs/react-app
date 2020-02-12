@@ -1,0 +1,12 @@
+.App {
+	margin: 5px;
+	text-align: center;
+}
+
+.subtext_red {
+	color: red;
+}
+
+.bold {
+	font-weight: bold;
+}
