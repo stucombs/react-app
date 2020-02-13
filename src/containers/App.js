@@ -1,47 +1,38 @@
 import React, { Component } from 'react';
 import './App.css';
-import styled from 'styled-components';
-import Person from '../Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 // import UserInput from './UserInput/UserInput';
 // import UserOutput from './UserOutput/UserOutput';
 // import CharacterCard from './CharacterCard/CharacterCard';
 // import Validation from './Validation/Validation';
 
-const StyledButton = styled.button`
-					background-color: ${props => props.alt ? 'red' : 'green'};
-					color: white;
-					font: inherit;
-					border: 1px solid blue;
-					padding: 8px;
-					cursor: pointer;
-					
-					&:hover {
-						background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-						color: black;
-					}`
-
 class App extends Component {
-
-	state = {
-		persons: [
-			{ id: 'vasdf1', name: 'Stu',   age: 25},
-			{ id: 'asdf11', name: 'Juan',  age: 69},
-			{ id: 'ahre12', name: 'Steph', age: 28}
-		],
-		otherState: 'some other value',
-		showPersons: false
+	constructor(props){
+		super(props);
+		console.log('[App.js] constructor');
+		this.state = {
+			persons: [
+				{ id: 'vasdf1', name: 'Stu',   age: 25},
+				{ id: 'asdf11', name: 'Juan',  age: 69},
+				{ id: 'ahre12', name: 'Steph', age: 28}
+			],
+			showPersons: false
+		}
 	}
 
-	switchNameHandler = (getName) => {
-		// DONT DO THIS(directly edit state): this.state.persons[0].name = 'Stuart';
-		this.setState({
-			persons: [
-				{ name: getName, age: 25},
-				{ name: 'Juan',  age: 69},
-				{ name: getName, age: 27}			 
-			]
-		} );
+	static getDerivedStateFromProps(props, state){
+		console.log('[App.js] getDerivedStateFromProps', props);
+		return state;
+	}
+
+	componentWillMount(){
+		console.log('[App.js] componentWillMount');
+	}
+
+	componentDidMount(){
+		console.log('[App.js] componentDidMount');
 	}
 
 	nameChangeHandler = (event, id) => {
@@ -61,9 +52,9 @@ class App extends Component {
 
 		this.setState({
 			persons: [
-				{ name: 'Stuart', age: 25},
-				{ name: event.target.value, age: 69},
-				{ name: 'Stephanie', age: 27}
+				{ id: 'vasdf1', name: 'Stuart', age: 25},
+				{ id: 'asdf11', name: event.target.value, age: 69},
+				{ id: 'ahre12', name: 'Stephanie', age: 27}
 			]
 		})
 	}
@@ -80,73 +71,23 @@ class App extends Component {
 	}
 
 	render() {
+		console.log('[App.js] render');
 		let persons = null;
-
 		if(this.state.showPersons){
 			persons = (
-				<div>
-				{this.state.persons.map((person, index) => {
-					//Error boundary components should wraop person component (Put key in parent component) [Error catches don't work in development]
-					return <Person name={person.name} value={person.name} click={() => this.deletePersonsHandler(index)} key={person.id} age={person.age} changed={(event) => this.nameChangeHandler(event, person.id)}/>
-				})}
-				</div>
+				<Persons persons={this.state.persons} clicked={this.deletePersonsHandler} changed={this.nameChangeHandler}/>
 			);
 		}else{
-			persons = (
-				<div>
-					<h3>No Results found</h3>
-				</div>
-			);
+			<div><h1>No results found</h1></div>
 		}
 
-		const subtextClass = [];
-		if(this.state.persons.length <= 2){
-			subtextClass.push('subtext_red'); //subtextClass = ['red']
-		}
-		if(this.state.persons.length <= 1){
-			subtextClass.push('bold'); //subtextClass = ['red', 'bold']
-		}
 		return (
 			<div className="App">
-				<h1>Hello from App, this is a component</h1>
-				<p className={subtextClass.join(' ')}>Here is some subtext </p>
-				<StyledButton alt={this.state.showPersons ? 1 : 0} key='' onClick={this.togglePersonsHandler}>Toggle Persons</StyledButton>
-			{persons}
+				<Cockpit show={this.state.showPersons} persons={this.state.persons} toggle={this.togglePersonsHandler} />
+				{persons}
 			</div>
 		);
 	}
 }
+
 export default App;
-//Assignment 2
-	// state = {
-	// 	currentText: ''
-	// }
-
-	// changeCurrentTextHandler = (event) => {
-	// 	this.setState({
-	// 		currentText: event.target.value
-	// 	});
-	// }
-
-	// removeCharHandler = (characterIndex) => {
-	// 	const text = this.state.currentText.split('');
-	// 	text.splice(characterIndex, 1);
-	// 	const updatedText = text.join('');
-	// 	this.setState({currentText: updatedText});
-	// }
-
-	// render(){
-
-	// 	const characters = this.state.currentText.split('').map((ch, index) => {
-	// 		return <CharacterCard character={ch} key={index} click={() => this.removeCharHandler(index)}/>; 
-	// 	});
-
-	// 	return(
-	// 		<div className="App">
-	// 			Enter Text: <input type='text' value={this.state.currentText} onChange={this.changeCurrentTextHandler.bind(this)}/>
-	// 			<p>Word length: {this.state.currentText.length}</p>
-	// 			<Validation textlength={this.state.currentText.length} />
-	// 			{characters}
-	// 		</div> 
-	// 	);
-	// }
