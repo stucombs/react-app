@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
+
+import AuthContext from '../../context/auth-context';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -16,6 +18,12 @@ const StyledButton = styled.button`
 
 const cockpit = (props) => {
 	const subtextClass = [];
+	const toggleButtonRef = useRef(null);
+
+	useEffect(() => {
+		toggleButtonRef.current.click();
+	}, []);
+
 	if(props.persons.length <= 2){
 		subtextClass.push('subtext_red'); //subtextClass = ['red']
 	}
@@ -27,9 +35,12 @@ const cockpit = (props) => {
 		<div>
 			<h1>Hello from App, this is a component</h1>
 			<p className={subtextClass.join(' ')}>Here is some subtext </p>
-			<StyledButton alt={props.show ? 1 : 0} onClick={props.toggle}>Toggle Persons</StyledButton>
+			<StyledButton alt={props.show ? 1 : 0} ref={toggleButtonRef} onClick={props.toggle}>Toggle Persons</StyledButton><br/><br/>
+			<AuthContext.Consumer>
+				{context => <StyledButton onClick={context.login}>Log In</StyledButton>}
+			</AuthContext.Consumer>
 		</div>
 	)
 }
 
-export default cockpit;
+export default React.memo(cockpit);

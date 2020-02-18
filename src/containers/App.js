@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/WithClass';
+import Aux from '../hoc/Aux';
+import AuthContext from '../context/auth-context';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 // import UserInput from './UserInput/UserInput';
 // import UserOutput from './UserOutput/UserOutput';
@@ -11,28 +14,21 @@ import Cockpit from '../components/Cockpit/Cockpit';
 class App extends Component {
 	constructor(props){
 		super(props);
-		console.log('[App.js] constructor');
 		this.state = {
 			persons: [
 				{ id: 'vasdf1', name: 'Stu',   age: 25},
 				{ id: 'asdf11', name: 'Juan',  age: 69},
 				{ id: 'ahre12', name: 'Steph', age: 28}
 			],
-			showPersons: false
+			showPersons: false,
+			showCockpit: true,
+			changeCounter: 0,
+			authenticated: false
 		}
 	}
 
-	static getDerivedStateFromProps(props, state){
-		console.log('[App.js] getDerivedStateFromProps', props);
-		return state;
-	}
-
-	componentWillMount(){
-		console.log('[App.js] componentWillMount');
-	}
-
 	componentDidMount(){
-		console.log('[App.js] componentDidMount');
+		// console.log('[App.js] componentDidMount');
 	}
 
 	nameChangeHandler = (event, id) => {
@@ -48,20 +44,21 @@ class App extends Component {
 		person.name = event.target.value;
 		const persons = [...this.state.persons];
 		persons[personIndex] = person;
-		this.setState( { persons: persons});
+		this.setState((prevState, props) => {
+			return {
+				persons: persons, changeCounter: prevState.changeCounter + 1 
+			};
+		});
 
-		this.setState({
-			persons: [
-				{ id: 'vasdf1', name: 'Stuart', age: 25},
-				{ id: 'asdf11', name: event.target.value, age: 69},
-				{ id: 'ahre12', name: 'Stephanie', age: 27}
-			]
-		})
 	}
 
 	togglePersonsHandler = () => {
 		const doesShow = this.state.showPersons;
 		this.setState({showPersons: !doesShow});
+	}
+
+	loginHandler = () => {
+		this.setState({ authenticated: true });
 	}
 
 	deletePersonsHandler = (personIndex) => {
@@ -70,24 +67,32 @@ class App extends Component {
 		this.setState({persons: persons});
 	}
 
+	//does not update DOM, "suggestion" as to how the HTML should look
 	render() {
-		console.log('[App.js] render');
+		// console.log('[App.js] render');
 		let persons = null;
 		if(this.state.showPersons){
 			persons = (
-				<Persons persons={this.state.persons} clicked={this.deletePersonsHandler} changed={this.nameChangeHandler}/>
+				<Persons persons={this.state.persons} clicked={this.deletePersonsHandler} changed={this.nameChangeHandler} isAuthenticated={this.state.authenticated}/>
 			);
 		}else{
 			<div><h1>No results found</h1></div>
 		}
 
 		return (
-			<div className="App">
-				<Cockpit show={this.state.showPersons} persons={this.state.persons} toggle={this.togglePersonsHandler} />
-				{persons}
-			</div>
+			<Aux className="App">
+				<button onClick={() => {this.setState({showCockpit: false });
+				}} > Remove Cockpit </button>
+				<AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
+					{this.state.showCockpit ? (
+						<Cockpit show={this.state.showPersons} persons={this.state.persons} toggle={this.togglePersonsHandler}/>
+					) : null}
+					{persons}
+				</AuthContext.Provider>
+			</Aux>
 		);
 	}
 }
 
-export default App;
+//export withclass with component to export and the classname
+export default withClass(App, "App");
