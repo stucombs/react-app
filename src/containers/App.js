@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/WithClass';
-import Aux from '../hoc/Aux';
+import Aux from '../hoc/Auxiliary';
 import AuthContext from '../context/auth-context';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 // import UserInput from './UserInput/UserInput';
@@ -25,11 +26,15 @@ class App extends Component {
 			changeCounter: 0,
 			authenticated: false
 		}
-	}
+	} 
 
-	componentDidMount(){
-		// console.log('[App.js] componentDidMount');
-	}
+	//componentWillMount() {
+		//not used very often, likely won't use
+	//}
+
+	// componentDidMount(){
+	// 	console.log('[App.js] componentDidMount');
+	// }
 
 	nameChangeHandler = (event, id) => {
 		const personIndex = this.state.persons.findIndex(p => {
@@ -44,6 +49,7 @@ class App extends Component {
 		person.name = event.target.value;
 		const persons = [...this.state.persons];
 		persons[personIndex] = person;
+
 		this.setState((prevState, props) => {
 			return {
 				persons: persons, changeCounter: prevState.changeCounter + 1 
@@ -67,13 +73,11 @@ class App extends Component {
 		this.setState({persons: persons});
 	}
 
-	//does not update DOM, "suggestion" as to how the HTML should look
 	render() {
-		// console.log('[App.js] render');
 		let persons = null;
 		if(this.state.showPersons){
 			persons = (
-				<Persons persons={this.state.persons} clicked={this.deletePersonsHandler} changed={this.nameChangeHandler} isAuthenticated={this.state.authenticated}/>
+				<Persons persons={this.state.persons} clicked={this.deletePersonsHandler} changed={this.nameChangeHandler} isAuthenticated={this.state.authenticated} />
 			);
 		}else{
 			<div><h1>No results found</h1></div>
@@ -85,7 +89,9 @@ class App extends Component {
 				}} > Remove Cockpit </button>
 				<AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.loginHandler}}>
 					{this.state.showCockpit ? (
-						<Cockpit show={this.state.showPersons} persons={this.state.persons} toggle={this.togglePersonsHandler}/>
+						<div>
+							<Cockpit show={this.state.showPersons} persons={this.state.persons} toggle={this.togglePersonsHandler} /><br/>
+						</div>
 					) : null}
 					{persons}
 				</AuthContext.Provider>

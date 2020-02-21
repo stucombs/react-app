@@ -22,7 +22,6 @@ class Persons extends PureComponent {
 
 	componentDidUpdate(prevProps, prevState, snapshot){ //for handle side effects
 		// console.log('[Persons.js] componentDidUpdate');
-		// console.log(snapshot);
 	}
 
 	render(){
