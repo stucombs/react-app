@@ -4,10 +4,10 @@
 <html>
 <head>
 	<link rel="stylesheet" href="css/main.css"/>
-	<title>React App</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylsheet" />
+	<title>My React Burger App</title>
 </head>
 <body>
-	<div class="spacer_div">&nbsp;</div>
 	<div id="root"></div>
 </body>
 	<script src="./dist/bundle.js"></script>
