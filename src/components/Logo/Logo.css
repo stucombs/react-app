@@ -1,5 +1,6 @@
 .Logo {
-	background-color: #703B09;
+	/*background-color: #703B09;*/
+	background-color: inherit;
 	padding: 8px;
 	height: 95%;
 	box-sizing: border-box;
