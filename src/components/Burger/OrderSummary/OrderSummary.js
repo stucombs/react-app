@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Auxiliary.js';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import classes from './OrderSummary.css';
 import Button from '../../../UI/Button/Button';
 
