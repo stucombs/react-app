@@ -1,0 +1,12 @@
+.NavigationIcon {
+  width: 35px;
+  height: 5px;
+  background-color: #63B13A;
+  margin: 6px 0;
+}
+
+@media (min-width: 499px) {
+	.NavigationIcon {
+		display: none;
+	}
+}

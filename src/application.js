@@ -1,21 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './containers/App';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com/';
-axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-
-axios.interceptors.request.use(request => {
-	console.log(request);
-	//edit request
-	return request;
-}, error => {
-	console.log(error);
-	return Promise.reject(error);
-});
-
-// axios.interceptors.request.eject(myInterceptor);
+axios.defaults.baseURL = 'https://cheeseburger-in-react.firebaseio.com/';
 
 ReactDOM.render(<App />, document.getElementById("root"));
