@@ -5,11 +5,15 @@ import BurgerBuilder from './BurgerBuilder/BurgerBuilder';
 import './App.css';
 
 class App extends Component {
+	state = {
+		show: true
+	}
+
 	render() {
 		return (
 			<div>
 				<Layout>
-					<BurgerBuilder ingredientAdded={this.addIngredientHandler} />
+					{this.state.show ? <BurgerBuilder ingredientAdded={this.addIngredientHandler} /> : null}
 				</Layout>
 			</div>
 		);
