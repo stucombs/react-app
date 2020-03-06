@@ -11,12 +11,10 @@ class FullPost extends Component {
 	}
 
 	componentDidMount(){
-		console.log(1);
 		this.loadData();
 	}
 
 	componentDidUpdate(){
-		console.log(2);
 		this.loadData();
 	}
 
