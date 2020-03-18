@@ -8,3 +8,5 @@ Related Course: [React - The Complete Guide](Reacthttps://www.udemy.com/course/r
 <br />
 [Blog Creator](http://shcombs.fyrus.inpcms.org/react-app/archive/BlogProject/)
 <br />
+[Redux Project](http://shcombs.fyrus.inpcms.org/react-app/archive/ReduxProject/)
+<br />
