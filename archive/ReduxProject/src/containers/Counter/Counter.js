@@ -3,13 +3,9 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import * as actionTypes from '../../store/actions';
 
 class Counter extends Component {
-	state = {
-		counter: 0,
-		results: []
-	}
-
 	render(){
 		return (
 			<div>
@@ -19,31 +15,33 @@ class Counter extends Component {
 				<CounterControl label="Add 5"      clicked={this.props.onAddCounter} />
 				<CounterControl label="Subtract 5" clicked={this.props.onSubtractCounter} />
 				<hr />
-				<button onClick={this.props.onSaveResult}>Save Result</button>
+				<button onClick={() => this.props.onSaveResult(this.props.ctr)}>Save Result</button>
 				<ul>
-					<li onClick={this.props.onDeleteResult}></li>
+					{this.props.storedResults.map(strResult => (
+						<li key={strResult.id} onClick={() => this.props.onDeleteResult(strResult.id)}>{strResult.value}</li>
+					))}
 				</ul>
 			</div>
 		)
 	}
 }
 
-const mapStatetoProps = state => {
+const mapStateToProps = state => {
 	return {
-		ctr: state.counter
+		ctr: state.counter.counter,
+		storedResults: state.result.results
 	}
 }
 
-const mapDispatchtoProps = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
-		onIncrementCounter: () => dispatch({type: 'INCREMENT'}),
-		onDecrementCounter: () => dispatch({type: 'DECREMENT'}),
-		onAddCounter: () => dispatch({type: 'ADD', value: 5}),
-		onSubtractCounter: () => dispatch({type: 'SUBTRACT', value: 5}),
-		onSaveResult: () => dispatch({type: 'STORE_RESULT'}),
-		onDeleteResult: () => dispatch({type: 'DELETE_RESULT'})
-
+		onIncrementCounter: () => dispatch({type: actionTypes.INCREMENT}),
+		onDecrementCounter: () => dispatch({type: actionTypes.DECREMENT}),
+		onAddCounter: () => dispatch({type: actionTypes.ADD, value: 5}),
+		onSubtractCounter: () => dispatch({type: actionTypes.SUBTRACT, value: 5}),
+		onSaveResult: (result) => dispatch({type: actionTypes.STORE_RESULT, result: result}),
+		onDeleteResult: (id) => dispatch({type: actionTypes.DELETE_RESULT, resultElId: id})
 	}
 }
 
-export default connect(mapStatetoProps, mapDispatchtoProps)(Counter);
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
