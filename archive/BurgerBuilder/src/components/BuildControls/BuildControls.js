@@ -8,7 +8,7 @@ const controls = [
 	{label: 'Bacon', type: 'bacon'},
 	{label: 'Cheese', type: 'cheese'},
 	{label: 'Meat', type: 'meat'}
-];
+]
 
 const buildControls = (props) => (
 	<div className={classes.BuildControls}>
@@ -18,6 +18,6 @@ const buildControls = (props) => (
 		))}
 		<button className={classes.OrderButton} disabled={!props.purchasable} onClick={props.toggleModal}>ORDER NOW</button>
 	</div>
-);
+)
 
 export default buildControls;
