@@ -1,4 +1,5 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/actionTypes';
+import {updateObject} from '../utility';
 
 const initialState = {
 	results: []
@@ -7,27 +8,14 @@ const initialState = {
 const result = (state = initialState, action) => {
 	switch(action.type){
 		case actionTypes.STORE_RESULT:
-			return {
-				...state,
-				results: state.results.concat({
-							id: new Date(),
-							value: action.result
-						})
-			}
+			return updateObject(state, {results: state.results.concat({id: new Date(), value: action.result})});
 		break;
 		case actionTypes.DELETE_RESULT:
-			// const id = 2;
-			// const newResults = [...state.results];
-			// newResults.splice(id, 1);
 			const newResults = state.results.filter(result => result.id !== action.resultElId);
-			return {
-				...state,
-				results: newResults
-			}
+			return updateObject(state, {results: newResults});
 		break;
+		default: return state;
 	}
-
-	return state;
 }
 
 export default result;
