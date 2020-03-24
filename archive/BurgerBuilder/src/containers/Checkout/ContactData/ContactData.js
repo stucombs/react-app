@@ -8,6 +8,7 @@ import axios from '../../../axios-orders';
 import Input from '../../../UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
+import {updateObject, checkValidity} from '../../../shared/utility';
 
 class ContactData extends Component {
 	state = {
@@ -77,7 +78,8 @@ class ContactData extends Component {
 				value: '',
 				validation: {
 					required: true,
-					minLength: 5
+					minLength: 5,
+					isEmail: true
 				},
 				valid: false,
 				touched: false
@@ -112,32 +114,16 @@ class ContactData extends Component {
 		this.props.onOrderBurger(order, this.props.token);
 	}
 
-	checkValidity(value, rules) {
-		let isValid = true;
-
-		if(rules.required){
-			isValid = value.trim() !== '' && isValid;
-		}
-
-		if(rules.minLength){
-			isValid = value.length >= rules.minLength && isValid;
-		}
-
-		return isValid;
-	}
-
 	inputChangedHandler = (event, inputIdentifier) => {
 		// console.log(event.target.value);
-		const updatedForm = {
-			...this.state.orderForm
-		}
-		const updatedFormEl = {
-			...updatedForm[inputIdentifier]
-		}
-		updatedFormEl.value = event.target.value;
-		updatedForm[inputIdentifier] = updatedFormEl;
-		if(updatedFormEl.validation){ updatedFormEl.valid = this.checkValidity(updatedFormEl.value, updatedFormEl.validation) };
-		updatedFormEl.touched = true;
+		const updatedFormEl = updateObject(this.state.orderForm[inputIdentifier], {
+			value: event.target.value,
+			valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+			touched: true
+		});
+		const updatedForm = updateObject(this.state.orderForm, {
+			[inputIdentifier]: updatedFormEl
+		});
 
 		let formIsValid = true;
 		for (let inputIdentifier in updatedForm){

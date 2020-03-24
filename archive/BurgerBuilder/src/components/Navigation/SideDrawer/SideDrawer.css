@@ -1,4 +1,4 @@
-.SideDrawer {
+.side-drawer {
 	position: fixed;
 	min-width: 34%;
 	/*width: 50px;*/
@@ -13,7 +13,7 @@
 }
 
 @media (min-width: 500px) {
-	.SideDrawer {
+	.side-drawer {
 		display: none;
 	}
 }
@@ -26,6 +26,6 @@
 	transform: translateX(-100%);
 }
 
-.Hide {
+.hide {
 	display: none;
 }
