@@ -1,5 +1,5 @@
 .input {
-	width: 100px;
+	width: 350px;
 	padding: 10px;
 	box-sizing: border-box;
 }
@@ -17,11 +17,16 @@
 	font: inherit;
 	padding: 6px 10px;
 	display: block;
-	width: 100px;
+	width: 350px;
 	box-sizing: border-box;
 }
 
 .input-element:focus {
 	outline: none;
 	background-color: #ccc;
+}
+
+.invalid {
+	border: 1px solid red;
+	background-color: #FDA49A;
 }

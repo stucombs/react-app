@@ -7,19 +7,19 @@ import Backdrop from '../../../UI/Backdrop/Backdrop';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 
 const sideDrawer = (props) => {
-	let attachedClasses = [classes.SideDrawer, classes.Hide];
+	let attachedClasses = [classes['side-drawer'], classes.hide];
 
 	if(props.open){
-		attachedClasses = [classes.SideDrawer];
+		attachedClasses = [classes['side-drawer']];
 	}
 
 	return (
 		<Aux>
 		<Backdrop show={props.open} clicked={props.closed} />
-		<div className={attachedClasses.join(' ')}>
+		<div className={attachedClasses.join(' ')} onClick={props.closed}>
 			<Logo height="11%" />
 			<nav>
-				<NavigationItems />
+				<NavigationItems isAuthenticated={props.isAuth}/>
 			</nav>
 		</div>
 		</Aux>
